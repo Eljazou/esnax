@@ -1,0 +1,72 @@
+{
+  "localisation": [
+    "https://pharma.icozdev.com",
+    "https://connectlabo.com",
+    "https://isislab.icozdev.com",
+    "https://val.icozdev.com"
+  ],
+  "https://pharma.icozdev.com": {
+    "aliases": [
+      "pharma",
+      "pharmafirst",
+      "pharma.exemple.com"
+    ],
+    "appPath": "/appwebfinal"
+  },
+  "https://val.icozdev.com": {
+    "aliases": [
+      "val",
+      "valpharma"
+    ],
+    "appPath": "/appwebfinal"
+  },
+  "https://connectlabo.com": {
+    "aliases": [
+      "esna",
+      "Esna",
+      "esnapharm",
+      "Esnapharm"
+    ],
+    "appPath": "/Appwebfinalv2",
+    "homePage": "index"
+  },
+  "https://airliquide.ia-performances.com": {
+    "aliases": [
+      "airliquide"
+    ],
+    "appPath": "/appwebfinal"
+  },
+  "https://bppharm.icozdev.com": {
+    "aliases": [
+      "labo",
+      "bppharm"
+    ],
+    "appPath": "/appwebfinal"
+  },
+  "https://isislab.icozdev.com": {
+    "aliases": [
+      "isis",
+      "Isis",
+      "isispharma",
+      "isispharm",
+      "isislab",
+      "Isislab"
+    ],
+    "appPath": "/appwebfinal"
+  },
+  "https://lcapharm.icozdev.com": {
+    "aliases": [
+      "lca",
+      "lcapharm"
+    ],
+    "appPath": "/appwebfinal"
+  },
+    "https://isi.wamdata.com": {
+    "aliases": [
+      "isdin",
+      "isi.wamdata"
+    ],
+    "appPath": "/appwebfinal",
+    "homePage": "dashboard"
+  }
+}

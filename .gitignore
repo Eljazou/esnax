@@ -1,0 +1,56 @@
+# CakePHP cache
+app/tmp/cache/models/*
+app/tmp/cache/persistent/*
+app/tmp/cache/views/*
+app/tmp/cache/queries/*
+app/tmp/cache/*
+
+# CakePHP logs
+app/tmp/logs/*
+!app/tmp/logs/.gitkeep
+
+# Sessions
+app/tmp/sessions/*
+!app/tmp/sessions/.gitkeep
+
+# Tests cache
+app/tmp/tests/*
+!app/tmp/tests/.gitkeep
+
+# Uploads (if applicable)
+app/webroot/files/*
+app/webroot/loc/*
+!app/webroot/files/.gitkeep
+
+app/webroot/uploads/*
+!app/webroot/uploads/.gitkeep
+app/Config/firebase_credentials.json
+
+# Vendor dependencies
+Vendor/
+vendors/
+
+# Composer
+/vendor/
+
+# Environment files
+.env
+.env.*
+
+# IDE files
+.idea/
+.vscode/
+*.sublime-project
+*.sublime-workspace
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Backup files
+*.bak
+*.sql
+*.zip

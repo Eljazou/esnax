@@ -1,0 +1,39 @@
+# ============================================================
+# CakePHP 2 — .gitignore  (root = app/)
+# ============================================================
+
+# ----- CakePHP cache & logs -----
+tmp/
+logs/
+
+# ----- CakePHP config (credentials) -----
+Config/database.php
+Config/email.php
+Config/security.php
+
+# ----- User-uploaded files & media (large binary content) -----
+webroot/files/
+webroot/img/
+webroot/loc/
+
+# ----- Node / npm -----
+node_modules/
+npm-debug.log*
+
+# ----- OS files -----
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ----- IDE / Editor -----
+.vscode/
+.idea/
+*.suo
+*.user
+
+# ----- PHP -----
+*.log
+*.cache
+
+# ----- Composer -----
+vendor/

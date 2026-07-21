@@ -1,0 +1,107 @@
+/*! Image Uploader - v1.0.0 - 15/07/2019
+ * Copyright (c) 2019 Christian Bayer; Licensed MIT */
+.image-uploader {
+    min-height: 10rem;
+    border: 1px solid #d9d9d9;
+    position: relative;
+}
+.image-uploader.drag-over {
+    background-color: #f3f3f3;
+}
+.image-uploader input[type="file"] {
+    width: 0;
+    height: 0;
+    position: absolute;
+    z-index: -1;
+    opacity: 0;
+}
+.image-uploader .upload-text {
+    position: absolute;
+    top: 0;
+/*    right: 0;
+    left: 0;*/
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+.image-uploader .upload-text i {
+    display: block;
+    font-size: 23px;
+    font-family: roboto;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    color: #0e72b5;
+}
+.image-uploader .upload-text span {
+    display: block;
+}
+/*.image-uploader.has-files .upload-text {
+    display: none;
+}*/
+.image-uploader .uploaded {
+    padding: 0.5rem;
+    line-height: 0;
+    left: 231px;
+    position: relative;
+    width: calc(100% - 242px);
+    text-align: left;
+}
+.image-uploader .uploaded .uploaded-image {
+    display: inline-block;
+    width: calc(23.666667% - 1rem);
+    padding-bottom: calc(16.6666667% - 1rem);
+    height: 126px;
+    position: relative;
+    margin: 0.5rem;
+    background: #f3f3f3;
+    cursor: default;
+}
+.image-uploader .uploaded .uploaded-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position: absolute;
+    border-radius: 8px;
+    left: 0;
+}
+.image-uploader .uploaded .uploaded-image .delete-image {
+    display: none;
+    cursor: pointer;
+    position: absolute;
+    top: 0.2rem;
+    right: 0.2rem;
+    border-radius: 50%;
+    padding: 4px 10px;
+    background-color: rgb(205 0 0 / 77%);
+    -webkit-appearance: none;
+    border: none;
+}
+.image-uploader .uploaded .uploaded-image:hover .delete-image {
+    display: block;
+}
+.image-uploader .uploaded .uploaded-image .delete-image i {
+    color: #fff;
+    font-size: 1.4rem;
+}
+/*mon style */
+i{
+	font-style: normal;
+}
+
+.image-uploader .upload-text {
+    position: absolute;
+    top: 0;
+    /* right: 0; */
+    /* left: 0; */
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    border: 4px dotted  #0e72b5;
+    padding: 14px;
+}
+
+

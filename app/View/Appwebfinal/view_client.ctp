@@ -1,0 +1,619 @@
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link
+  href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,800;1,900&display=swap"
+  rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap" rel="stylesheet">
+<?php
+
+echo $this->Html->css('style_viewclient');
+?>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap"
+  rel="stylesheet">
+
+<style type="text/css">
+  .fa-note-sticky {
+    font-weight: inherit;
+    font-size: 21px;
+    padding-top: 3px;
+  }
+
+  .rond-notif {
+    background-color: #e32424;
+    /* width: 18px; */
+    padding: 1px 5px 0px;
+    /* height: 20px; */
+    border-radius: 47px;
+    position: absolute;
+    top: -9px;
+    right: 0px;
+    font-size: 14px;
+
+  }
+
+  .btn.btn-rounded {
+    position: relative;
+  }
+
+  .historiq_body,
+  .checkeditor_body {
+    padding: 0px 10px 0px 10px;
+  }
+
+  .card {
+    border-bottom: 1px solid #d0d0d0;
+    padding-bottom: 32px;
+  }
+
+  .hide-content {
+    height: 100%;
+  }
+
+  .td-style {
+    width: 70%;
+    word-break: break-word;
+  }
+
+
+
+
+  .start-icon {
+    position: absolute;
+    /* bottom: -15px; */
+    bottom: -14px;
+  }
+
+  .start-icon i {
+    font-size: 19px;
+    color: #f1b400;
+  }
+
+  .col-imag {
+    display: flex;
+    align-content: center;
+    justify-content: center;
+  }
+
+  .cropped-container {
+    position: relative;
+    width: 56px;
+    height: 56px;
+    vertical-align: middle;
+    border-radius: 50px;
+    box-shadow: 0px 17px 14px 4px #43434338;
+    border: 2px solid #ffffff;
+    overflow: hidden;
+    background-color: #ffffff;
+  }
+
+  .cropped-image {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 2px;
+  }
+
+  .myflex {
+    display: flex;
+    flex-direction: column;
+    row-gap: 17px;
+    margin-top: 12px;
+  }
+
+  #select_sup {
+    display: none;
+  }
+</style>
+<div class="hide-content">
+
+  <div class="row my-header">
+
+    <div class="col-3 ">
+      <a class="btn_spiner" href="<?php echo $this->Html->url(array("action" => "clients", $code)); ?>">
+        <i class="fa-solid fa-angle-left arrow"></i>
+      </a>
+    </div>
+
+    <div class="col-6 col-imag">
+      <?php if ($client['Client']['type_id'] == 1 || $client['Client']['type_id'] == 5) { ?>
+        <div class="cropped-container">
+          <?php echo $this->Html->image('docteur.png', array('class' => 'cropped-image')); ?>
+        </div>
+        <?php
+        if (!empty($client['Action'])) {
+        ?>
+          <span class='start-icon'>
+            <i class="fa-solid fa-star"></i>
+          </span>
+        <?php }
+      } else if ($client['Client']['type_id'] == 3) { ?>
+        <div class="cropped-container">
+          <?php echo $this->Html->image('paragrossiste.png', array('class' => 'cropped-image')); ?>
+        </div>
+        <?php if (!empty($client['Action'])) {
+        ?>
+          <span class='start-icon'>
+            <i class="fa-solid fa-star"></i>
+          </span>
+        <?php }
+      } else { ?>
+        <div class="cropped-container">
+          <?php echo $this->Html->image('pharma.png', array('class' => 'cropped-image')); ?>
+        </div>
+        <?php if (!empty($client['Action'])) {
+        ?>
+          <span class='start-icon'>
+            <i class="fa-solid fa-star"></i>
+          </span>
+      <?php }
+      } ?>
+
+    </div>
+    <div class="col-3"></div>
+    <div class="col-12 col-name">
+      <p class="tile-pages" style="display: inline-block; vertical-align: middle;">
+        <?php echo 'Dr. ' . ucfirst(strtolower($client['Client']['nom'])) . ' ' . ucfirst(strtolower($client['Client']['prenom'])); ?>
+      </p>
+    </div>
+    <div class="col-12">
+      <p class="category"><?php echo ucfirst(strtolower($client['Client']['category'])); ?></p>
+    </div>
+    <div class="center">
+      <div>
+        <a href="tel:+212<?php echo h($client['Client']['tel']); ?>"
+          class="btn btn-primary btn-rounded btn-icon btn-phone">
+          <i class="fa-solid fa-phone"></i>
+        </a>
+      </div>
+      <?php
+
+      $potential = $client['Client']['potentialite'];
+      $buttonClass = 'btn-yellow';
+
+      if ($potential == 'C') {
+        $buttonClass = 'btn-yellow';
+      } elseif ($potential == 'B') {
+        $buttonClass = 'btn-orange';
+      } elseif ($potential == 'A') {
+        $buttonClass = 'btn-green';
+      } elseif ($potential == 'B+') {
+        $buttonClass = 'btn-b';
+      } elseif ($potential == 'A++') {
+        $buttonClass = 'btn-aa';
+      } elseif ($potential == 'A+') {
+        $buttonClass = 'btn-a';
+      }
+      ?>
+
+      <div>
+        <button type="button" class="btn btn-primary btn-rounded btn-icon potentialite <?php echo $buttonClass; ?>">
+          <?php echo $client['Client']['potentialite']; ?>
+        </button>
+      </div>
+
+      <div>
+        <button type="button" class="btn btn-primary btn-rounded btn-icon btn-phone" data-toggle="modal"
+          data-target="#checkeditorModalLong">
+          <i class="fa-solid fa-note-sticky"></i>
+        </button>
+      </div>
+    </div>
+
+  </div>
+  <div class="card all-visite ">
+
+    <div class="col-12">
+      <h2 class="titre">Détails</h2>
+      <div class="col-12">
+        <div class="row">
+          <div class="card card-details">
+            <div class="card-body" style="">
+              <table class="">
+
+                <tbody>
+                  <tr>
+                    <th class="th-style">Activité</th>
+                    <td class="td-style"><?php echo h($client['Client']['activite']); ?></td>
+                  </tr>
+                  <tr>
+                    <th class="th-style">Exercice</th>
+                    <td class="td-style"><?php echo h($client['Client']['exercice']); ?></td>
+                  </tr>
+                  <tr>
+                    <th class="th-style">Mail</th>
+                    <td class="td-style"><?php echo h($client['Client']['mail']); ?></td>
+                  </tr>
+                  <tr>
+                    <th class="th-style">Fixe</th>
+                    <td class="td-style"><?php echo h($client['Client']['fixe']); ?></td>
+                  </tr>
+                  <tr>
+                    <th class="th-style">Fax</th>
+                    <td class="td-style"><?php echo h($client['Client']['fax']); ?></td>
+                  </tr>
+                  <tr>
+                    <th class="th-style">Secteur</th>
+                    <td class="td-style"><?php echo $client["Client"]["secteur"]; ?></td>
+                  </tr>
+                  <tr>
+                    <th class="th-style">Adresse</th>
+                    <td class="td-style"><?php echo h($client['Client']['adress']); ?></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+      <h2 class="titre">Visites</h2>
+
+      <?php
+      if (!empty($client['Client']['Visite'])) { ?>
+        <div class="scroll-container">
+          <div class="card-container visites ">
+            <?php foreach ($client['Client']['Visite'] as $c): ?>
+
+              <div class="">
+                <div class="bg-white p-3 mb-2 card-visite">
+                  <div class="d-flex justify-content-between">
+                    <div class="d-flex flex-row align-items-center">
+                      <div class="icon icon-visite"><?php $premiereLettre = substr($c['responsable'], 0, 1);
+                                                    echo $premiereLettre ?></div>
+                      <div class="ms-2 c-details">
+                        <h6 class="mb-0"><?php echo $c['responsable']; ?></h6> <span class="date">
+                          <?php
+                          $formatter = new IntlDateFormatter('fr_FR', IntlDateFormatter::FULL, IntlDateFormatter::NONE);
+                          // Créer un objet DateTime avec la date donnée
+                          $date = new DateTime($c['date']);
+                          // Spécifier le format personnalisé pour le mois et l'année
+                          $formatter->setPattern('dd-MM-yyyy');
+                          // Afficher la date formatée en français
+                          echo $formatter->format($date);
+                          ?></span>
+                      </div>
+                    </div>
+                    <div class="badge"> <span><?php
+                                              $timestamp = strtotime($c['date']);
+                                              $heure = date('H:i', $timestamp);
+                                              echo $heure;
+                                              ?></span> </div>
+                  </div>
+                  <div class="">
+                    <h3 class="heading commantaire"><?php echo $c['commentaire'] ?></h3>
+                  </div>
+                </div>
+              </div>
+            <?php endforeach ?>
+
+          </div>
+        </div>
+      <?php } ?>
+
+    </div>
+  </div>
+  <!-- Add a modal dialog -->
+  <div class="modal fade" id="ConfirmationModal" tabindex="-1" role="dialog" aria-labelledby="ConfirmationModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="row">
+          <div class="col-11" style="text-align: center;padding-right: 0px;padding-top: 15px;">
+            <svg xmlns="http://www.w3.org/2000/svg" data-name="Layer 1" width="172" height="115"
+              viewBox="0 0 581.04762 526.16056" xmlns:xlink="http://www.w3.org/1999/xlink">
+              <polygon points="408.662 514.39 398.761 514.389 394.051 476.199 408.664 476.2 408.662 514.39"
+                fill="#ffb6b6" />
+              <path
+                d="M718.48686,711.63877l-30.447-.00116v-.385A11.85148,11.85148,0,0,1,699.89067,699.402h.00073l5.56152-4.21923,10.37659,4.21991,2.65784.00006Z"
+                transform="translate(-309.47619 -186.91972)" fill="#2f2e41" />
+              <polygon points="537.03 460.1 530.635 467.658 498.436 446.59 507.874 435.434 537.03 460.1"
+                fill="#ffb6b6" />
+              <path
+                d="M854.61717,653.424l-19.66449,23.245-.29395-.24866a11.85148,11.85148,0,0,1-1.39412-16.70139l.00047-.00055.37049-6.971,9.92334-5.197,1.71655-2.02917Z"
+                transform="translate(-309.47619 -186.91972)" fill="#2f2e41" />
+              <path d="M364.97816,196.91972h-27a5,5,0,0,1,0-10h27a5,5,0,0,1,0,10Z"
+                transform="translate(-309.47619 -186.91972)" fill="#e6e6e6" />
+              <circle cx="232.50197" cy="5" r="4.5" fill="#e6e6e6" />
+              <circle cx="246.50197" cy="5" r="4.5" fill="#e6e6e6" />
+              <circle cx="260.50197" cy="5" r="4.5" fill="#e6e6e6" />
+              <path
+                d="M393.47619,328.91042h-48a12.51408,12.51408,0,0,1-12.5-12.5v-48a12.51409,12.51409,0,0,1,12.5-12.5h48a12.51409,12.51409,0,0,1,12.5,12.5v48A12.51408,12.51408,0,0,1,393.47619,328.91042Z"
+                transform="translate(-309.47619 -186.91972)" fill="#f2f2f2" />
+              <path
+                d="M562.47814,328.91042h-48a12.51408,12.51408,0,0,1-12.5-12.5v-48a12.51409,12.51409,0,0,1,12.5-12.5h48a12.51409,12.51409,0,0,1,12.5,12.5v48A12.51408,12.51408,0,0,1,562.47814,328.91042Z"
+                transform="translate(-309.47619 -186.91972)" fill="#f2f2f2" />
+              <path
+                d="M477.47619,328.91042h-48a12.51408,12.51408,0,0,1-12.5-12.5v-48a12.51409,12.51409,0,0,1,12.5-12.5h48a12.51409,12.51409,0,0,1,12.5,12.5v48A12.51408,12.51408,0,0,1,477.47619,328.91042Z"
+                transform="translate(-309.47619 -186.91972)" fill="#f2f2f2" />
+              <path
+                d="M345.47619,361.91042a11.51279,11.51279,0,0,0-11.5,11.5v48a11.5131,11.5131,0,0,0,11.5,11.5h48a11.5131,11.5131,0,0,0,11.5-11.5v-48a11.51279,11.51279,0,0,0-11.5-11.5Z"
+                transform="translate(-309.47619 -186.91972)" fill="#f2f2f2" />
+              <path
+                d="M562.47814,433.91042h-48a12.51408,12.51408,0,0,1-12.5-12.5v-48a12.51409,12.51409,0,0,1,12.5-12.5h48a12.51409,12.51409,0,0,1,12.5,12.5v48A12.51408,12.51408,0,0,1,562.47814,433.91042Z"
+                transform="translate(-309.47619 -186.91972)" fill="#f2f2f2" />
+              <path
+                d="M477.47619,433.91042h-48a12.51408,12.51408,0,0,1-12.5-12.5v-48a12.51409,12.51409,0,0,1,12.5-12.5h48a12.51409,12.51409,0,0,1,12.5,12.5v48A12.51408,12.51408,0,0,1,477.47619,433.91042Z"
+                transform="translate(-309.47619 -186.91972)" fill="#f2f2f2" />
+              <path
+                d="M393.47619,538.91042h-48a12.51408,12.51408,0,0,1-12.5-12.5v-48a12.51409,12.51409,0,0,1,12.5-12.5h48a12.51409,12.51409,0,0,1,12.5,12.5v48A12.51408,12.51408,0,0,1,393.47619,538.91042Z"
+                transform="translate(-309.47619 -186.91972)" fill="#f2f2f2" />
+              <path
+                d="M562.47814,538.91042h-48a12.51408,12.51408,0,0,1-12.5-12.5v-48a12.51409,12.51409,0,0,1,12.5-12.5h48a12.51409,12.51409,0,0,1,12.5,12.5v48A12.51408,12.51408,0,0,1,562.47814,538.91042Z"
+                transform="translate(-309.47619 -186.91972)" fill="#f2f2f2" />
+              <path
+                d="M477.47619,538.91042h-48a12.51408,12.51408,0,0,1-12.5-12.5v-48a12.51409,12.51409,0,0,1,12.5-12.5h48a12.51409,12.51409,0,0,1,12.5,12.5v48A12.51408,12.51408,0,0,1,477.47619,538.91042Z"
+                transform="translate(-309.47619 -186.91972)" fill="#f2f2f2" />
+              <path
+                d="M574.3424,512.41042H327.61a18.1543,18.1543,0,0,1-18.13379-18.13378V396.54421A18.15431,18.15431,0,0,1,327.61,378.41042H574.3424a18.15431,18.15431,0,0,1,18.13379,18.13379v97.73243A18.1543,18.1543,0,0,1,574.3424,512.41042Z"
+                transform="translate(-309.47619 -186.91972)" fill="#fff" />
+              <path
+                d="M574.3424,512.41042H327.61a18.1543,18.1543,0,0,1-18.13379-18.13378V396.54421A18.15431,18.15431,0,0,1,327.61,378.41042H574.3424a18.15431,18.15431,0,0,1,18.13379,18.13379v97.73243A18.1543,18.1543,0,0,1,574.3424,512.41042Zm-199.04731-132a63.8189,63.8189,0,0,0-63.8189,63.8189v50.04732A16.13378,16.13378,0,0,0,327.61,510.41042H574.3424a16.13378,16.13378,0,0,0,16.13379-16.13378V396.54421a16.13379,16.13379,0,0,0-16.13379-16.13379Z"
+                transform="translate(-309.47619 -186.91972)" fill="#e6e6e6" />
+              <polygon
+                points="457 233.491 403.921 239.649 383 275.491 380 287.491 381.358 295.741 378 301.491 380 312.491 372 399.491 394 497.491 414.5 497.491 408 406.491 425 328.491 440 404.491 509.37 464.903 525.528 441.739 472 396.491 467 380.491 473.737 366.963 479 277.491 457 233.491"
+                fill="#2f2e41" />
+              <path
+                d="M743.97619,457.91042s35.00787,1.79725,35.5-10.5-7.38435-25.32659-11-26-2.30315-11.5-.40158-19,.42232-10.97926-1.838-11.23963-54.76037-71.76037-54.76037-71.76037l-11.5.5-11.5-8.5-18,7-4,16-11,10,6.29921,43.96228s6.97618,17.74395,16.56486,35.83495c2.98343,5.62885,6.21977,11.29129,9.57758,16.46332,7.90885,12.182,16.49161,21.64327,24.03079,21.5367C732.97619,461.91042,743.97619,457.91042,743.97619,457.91042Z"
+                transform="translate(-309.47619 -186.91972)" fill="#6c63ff" />
+              <path
+                d="M614.14551,411.19637l-6.3034,2.91047-1.459.67117-2.33623,1.08814-48.65143,22.46293a7.25617,7.25617,0,0,1-8.74153,1.49452,6.959,6.959,0,0,1-2.80529-9.42763c.03106-.05777.06788-.10585.099-.16355a7.29675,7.29675,0,0,1,9.7558-2.8696,7.3935,7.3935,0,0,1,.95989.64612l1.26275-.8031,3.96216-2.51279,2.9934-1.89757,5.952-3.78748,2.3089-1.4644,7.48538-4.75149,7.22054-4.58093,8.74809-5.55466,6.72356-4.27242,2.094,2.09147Z"
+                transform="translate(-309.47619 -186.91972)" fill="#ffb6b6" />
+              <path
+                d="M626.73888,410.17246a12.53456,12.53456,0,0,1-2.66882.81486c-2.907.04044-.33522-2.52227-5.72733,1.61274-4.38022,3.35016-5.75623-.30664-6.05464,1.48023-.49593,2.951-2.84.681-4.446.02655-.71253-.29606-1.27007-.26548-1.459.67117a4.77117,4.77117,0,0,0-.05538,1.31518c.09351,1.69775-.86146,1.258-2.28085-.227-2.34326-2.4667-5.94425-7.79691-8.05289-11.05732-.61159-.91862-1.09076-1.68046-1.3975-2.15231-.22228-.35195-.343-.555-.343-.555a4.50845,4.50845,0,0,1,1.71942-2.63167,15.66442,15.66442,0,0,1,6.13226-3.04423,24.13888,24.13888,0,0,1,4.74569-.68887,3.18443,3.18443,0,0,0,1.6842-.55647l.00968-.00575a2.48055,2.48055,0,0,0,.76969-1.96238c.09407-1.8223,2.35223-2.1836,4.6765-2.19169,2.18915.00685,4.45045.311,5.01109-.02234.807-.47981,18.69956-26.832,30.11547-43.71854a17.19553,17.19553,0,0,1,23.48263-4.8744l7.993,5.09031a12.347,12.347,0,0,1,6.723,6.444,13.26043,13.26043,0,0,1,.52194,7.91984,31.31108,31.31108,0,0,1-4.61658,10.34693C672.17616,389.34584,636.98853,406.3289,626.73888,410.17246Z"
+                transform="translate(-309.47619 -186.91972)" fill="#6c63ff" />
+              <path
+                d="M772.22565,377.8654l4.04828,5.64048.93458,1.306,1.50968,2.08876,31.24492,43.535a7.25616,7.25616,0,0,1,3.11816,8.30211,6.959,6.959,0,0,1-8.72838,4.5349c-.06259-.0196-.11676-.04667-.1793-.06632a7.29677,7.29677,0,0,1-4.66-9.03851,7.39579,7.39579,0,0,1,.45326-1.06462l-1.02708-1.0884-3.2157-3.41645-2.42863-2.58126-4.84316-5.12979-1.874-1.99088-6.07937-6.45359-5.86187-6.22572-7.1065-7.54195-5.46507-5.79593,1.65846-2.45127Z"
+                transform="translate(-309.47619 -186.91972)" fill="#ffb6b6" />
+              <path
+                d="M768.84236,365.69187a12.53526,12.53526,0,0,1,1.30412,2.467c.58857,2.847-2.41362.80543,2.66512,5.31981,4.11694,3.66887.78572,5.71059,2.5968,5.66625,2.99152-.07017,1.205,2.66031.86553,4.361-.1562.75562-.0209,1.29735.93458,1.306a4.77051,4.77051,0,0,0,1.302-.19394c1.64957-.41238,1.39805.60843.20771,2.2827-1.97989,2.76685-6.53431,7.30949-9.33794,9.99581-.78662.774-1.44429,1.38843-1.84973,1.77874-.30365.28474-.48024.44161-.48024.44161a4.50844,4.50844,0,0,1-2.909-1.19159,15.66437,15.66437,0,0,1-4.14732-5.44717,24.13883,24.13883,0,0,1-1.57254-4.53026,3.18438,3.18438,0,0,0-.86445-1.54884l-.00748-.00842a2.48059,2.48059,0,0,0-2.07241-.38533c-1.80729.2517-2.58846-1.89763-3.03525-4.17855-.40662-2.15107-.5349-4.42912-.9681-4.91674-.9188-1.03421-27.43967-16.79771-27.43967-16.79771l-26.9097-35.4717a12.347,12.347,0,0,1,5.05873-7.81884,13.26059,13.26059,0,0,1,7.67884-2.00792,31.311,31.311,0,0,1,11.0325,2.57991C739.81118,325.00421,763.13266,356.3523,768.84236,365.69187Z"
+                transform="translate(-309.47619 -186.91972)" fill="#6c63ff" />
+              <circle cx="359.46794" cy="100.47308" r="23.0557" fill="#ffb6b6" />
+              <path
+                d="M695.20617,292.25039s-4.76,6.75006-7.73,9.16c.03-3.50994-.55-9.36-.52-12.86a17.20656,17.20656,0,0,0-.55-5.46,5.76277,5.76277,0,0,0-3.61-3.87,4.23506,4.23506,0,0,0-4.54,6.63c-1.5.31-2.8-1.14-3.39-2.56-.59-1.42-.9-3.06-2.06-4.08a4.41137,4.41137,0,0,0-4.25-.64,10.2909,10.2909,0,0,0-3.72,2.46c-3.15,2.93-5.76,6.49-9.37,8.85a13.85971,13.85971,0,0,1-2.29,1.21,10.8581,10.8581,0,0,0-4.09-5.98,18.72375,18.72375,0,0,1-.07,6.92,7.94485,7.94485,0,0,1-5.59-1.71,9.29856,9.29856,0,0,1-3-5.92,15.38851,15.38851,0,0,1-.09-3.11,9.489,9.489,0,0,0,1.53-1.06,10.326,10.326,0,0,0,2.57-3.12,16.92478,16.92478,0,0,1-3.73.76c.01-.08.02-.15.03-.23a10.22283,10.22283,0,0,1,1.66-4.82c1.06-1.35,3.07-2.12,4.56-1.25a21.93946,21.93946,0,0,1,27.74-14.5,10.42844,10.42844,0,0,0-1.01,3.91,17.78272,17.78272,0,0,1,3.73-2.65,4.82438,4.82438,0,0,1,2.48,3.56c1.91.35,5.57.8,4.27,2.13a22.48518,22.48518,0,0,1,11.04,28.23Z"
+                transform="translate(-309.47619 -186.91972)" fill="#2f2e41" />
+              <path
+                d="M434.20475,425.716,344.315,424.6666a.98365.98365,0,1,1,.007-1.96729l89.88976,1.04943a.98365.98365,0,0,1-.007,1.96729Z"
+                transform="translate(-309.47619 -186.91972)" fill="#ccc" />
+              <path
+                d="M480.20475,441.716,344.315,440.6666a.98365.98365,0,1,1,.007-1.96729l135.88976,1.04943a.98365.98365,0,0,1-.007,1.96729Z"
+                transform="translate(-309.47619 -186.91972)" fill="#ccc" />
+              <circle cx="225.64143" cy="246.24071" r="21" fill="#6c63ff" />
+              <polygon
+                points="233.048 251.336 225.641 233.78 218.235 251.336 224.641 248.615 224.641 259.241 226.641 259.241 226.641 248.615 233.048 251.336"
+                fill="#fff" />
+              <path d="M556.11762,473.66042h-210a2.5,2.5,0,0,0,0,5h210a2.5,2.5,0,0,0,0-5Z"
+                transform="translate(-309.47619 -186.91972)" fill="#f2f2f2" />
+              <path d="M466.11762,473.66042v5h-120a2.5,2.5,0,0,1,0-5Z" transform="translate(-309.47619 -186.91972)"
+                fill="#6c63ff" />
+              <path
+                d="M833.78853,695.74733a2.26935,2.26935,0,0,0,1.64468-3.93333l-.15549-.61819q.0307-.07428.06178-.1484a6.09417,6.09417,0,0,1,11.24139.04177c1.83858,4.42817,4.17942,8.86389,4.75579,13.54595a18.02888,18.02888,0,0,1-.31648,6.20046,72.28149,72.28149,0,0,0,6.57515-30.02077,69.76616,69.76616,0,0,0-.43275-7.78294q-.3585-3.17781-.9947-6.31034a73.119,73.119,0,0,0-14.50012-30.98962,19.459,19.459,0,0,1-8.09295-8.39652,14.84306,14.84306,0,0,1-1.34992-4.05618c.394.05168,1.48556-5.94866,1.18841-6.31679.54906-.83317,1.53177-1.24733,2.13143-2.06035,2.98233-4.0434,7.09121-3.33741,9.23621,2.15727,4.58224,2.31266,4.62659,6.14806,1.81495,9.83683-1.78878,2.34682-2.03456,5.52233-3.60408,8.03478.16151.20671.32944.407.4909.61366a73.59123,73.59123,0,0,1,7.681,12.1686,30.59231,30.59231,0,0,1,1.82641-14.20959c1.74819-4.21732,5.0249-7.76915,7.91045-11.415a6.27921,6.27921,0,0,1,11.184,3.08332q.00887.08063.01732.1612-.6429.36267-1.25864.76991a3.0782,3.0782,0,0,0,1.24107,5.60175l.06276.00967a30.628,30.628,0,0,1-.80734,4.57938c3.7018,14.31579-4.29011,19.52989-15.70147,19.76412-.25191.12916-.49738.25833-.74929.38109a75.11519,75.11519,0,0,1,4.04327,19.02779,71.24332,71.24332,0,0,1-.05168,11.50322l.01939-.13562a18.82558,18.82558,0,0,1,6.4266-10.87027c4.94561-4.06264,11.93282-5.55869,17.26826-8.82426a3.533,3.533,0,0,1,5.41121,3.43708l-.02182.14261a20.67715,20.67715,0,0,0-2.31871,1.11733q-.6429.36276-1.25864.76992a3.07824,3.07824,0,0,0,1.24107,5.6018l.06282.00965c.0452.00646.084.01294.12911.01943a30.65446,30.65446,0,0,1-5.63854,8.82923c-2.31463,12.49712-12.256,13.68282-22.89022,10.04353h-.00648a75.09324,75.09324,0,0,1-5.0444,14.72621H834.24009c-.06463-.20022-.12274-.40692-.18089-.60717a20.47477,20.47477,0,0,0,4.98629-.297c-1.337-1.64059-2.674-3.2941-4.011-4.93463a1.12094,1.12094,0,0,1-.084-.09689c-.67817-.8396-1.36282-1.67283-2.041-2.51246l-.00036-.001a29.99039,29.99039,0,0,1,.87876-7.63984Z"
+                transform="translate(-309.47619 -186.91972)" fill="#f2f2f2" />
+              <path
+                d="M634.85377,711.89028a1.18647,1.18647,0,0,0,1.19006,1.19h253.29a1.19,1.19,0,1,0,0-2.38h-253.29A1.18651,1.18651,0,0,0,634.85377,711.89028Z"
+                transform="translate(-309.47619 -186.91972)" fill="#ccc" />
+            </svg>
+          </div>
+          <div class="col-1" style="    padding: 13px 28px 0px 0px;"><button type="button" class="close"
+              data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true"><i class="fa-light fa-xmark-large"></i></span>
+            </button></div>
+
+        </div>
+
+        <div class="modal-header">
+
+          <h5 class="modal-title" id="ConfirmationModalLabel">Type de visite</h5>
+
+        </div>
+        <div class="modal-body">
+          est ce que cette visite est un visite double ou non ?
+          <!-- select for choise between double and single -->
+          <div class="myflex">
+            <div>
+              <select class="form-control" id="select_type_visite">
+                <option value="">Sélectionnez le type de visite</option>
+                <option value="solo">Visite solo</option>
+                <option value="double">Visite double</option>
+              </select>
+            </div>
+            <!-- select for selecting the user who made the double visit -->
+            <div>
+              <select class="form-control" id="select_sup">
+                <option value="">Sélectionnez l'utilisateur</option>
+                <?php foreach ($doubles as $key => $value): ?>
+                  <option value="<?php echo $key; ?>"><?php echo $value; ?></option>
+                <?php endforeach; ?>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+          <button id="<?php echo $client["Client"]["id"]; ?>" class="btn_spiner btn btn-danger set_chez_client">Oui</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+  <!-- modal checkediteur   -->
+
+  <div class="modal fade" id="checkeditorModalLong" tabindex="-1" role="dialog"
+    aria-labelledby="checkeditorModalLongModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="ConfirmationModalLabel">Note</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true"><i class="fa-light fa-xmark-large"></i></span>
+          </button>
+
+        </div>
+        <div class="modal-body checkeditor_body">
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+  <footer class="footer ftr">
+    <div class="row">
+      <div class="col-12 text-center">
+        <?php
+        if (count($visiteencour) == 0) { ?>
+          <button type="button" class="btn btn-primary button-footer" data-toggle="modal"
+            data-target="#ConfirmationModal">
+            Démarrer la Visite
+          </button>
+          <!-- <button type="button" class=" btn_spiner btn btn-primary button-footer set_chez_client" id="<?php echo $client["Client"]["id"]; ?>" data-href-just-info="/Appwebfinal/set_chez_client/<?php echo $code . '/' . $client['Client']['id']; ?>">Démarrer la Visite</button> -->
+          <?php }
+        // echo $this->Html->link("Démarrer la Visite", array("action" => "set_chez_client", $code, $client["Client"]["id"], $lan, $lon), array('class' => 'btn_spiner btn btn-primary button-footer'));
+        else {
+          if ($client["Client"]["id"] == $visiteencour["Visite"]["client_id"]) {
+            if ($client["Client"]["type_id"] == 1 || $client["Client"]["type_id"] == 5)
+              echo $this->Html->link("Envoyer le Rapport", array("action" => "rapport_medcin", $code, $client["Client"]["id"], $visiteencour["Visite"]["id"]), array('class' => 'btn_spiner btn btn-primary button-footer'));
+            else
+              echo $this->Html->link("Envoyer le Rapport", array("action" => "rapport_pharmacie", $code, $client["Client"]["id"], $visiteencour["Visite"]["id"]), array('class' => 'btn_spiner btn btn-primary button-footer'));
+          } else { ?>
+            <a href="<?php echo $this->Html->url(array("action" => "view_client", $code, $visiteencour["Client"]["id"])); ?>"
+              class="btn_spiner btn btn-primary button-footer btn_viewclient"
+              id="<?php echo $visiteencour["Client"]["id"]; ?>">Remplir rapport de :
+              <?php echo $visiteencour["Client"]["nom"]; ?> </a>
+        <?php }
+        }
+
+
+        ?>
+      </div>
+    </div>
+  </footer>
+
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+
+
+<script type="text/javascript">
+  $(document).ready(function() {
+
+
+    var checkval = <?php echo json_encode($lignespecialiteinfo); ?>;
+    if (!jQuery.isEmptyObject(checkval)) {
+      console.log(checkval);
+
+      $(".checkeditor_body").append(checkval[0].Lignespecialiteinfo.text);
+
+      $('#checkeditorModalLong').modal('toggle');
+
+
+    }
+
+
+    $('.set_chez_client').on('click', function() {
+      var clientId = this.id;
+      var typeVisite = $('#select_type_visite').val();
+
+      if (typeVisite === 'solo') {
+
+        sendToReactAppSetChezClient(clientId + '||1||');
+      } else if (typeVisite === 'double') {
+        var supId = $('#select_sup').val();
+        sendToReactAppSetChezClient(clientId + '||2||' + supId);
+      } else {
+        alert('Veuillez sélectionner le type de visite.');
+        // when do ok in alert hide the loading spiner set timeout 1s and hide the spiner
+        setTimeout(function() {
+          $("#loading-overlay").css('display', 'none');
+        }, 200);
+
+      }
+    });
+
+
+
+    // display select_sup if type visite is visite double :
+    $('#select_type_visite').on('change', function() {
+      if (this.value == "double") {
+        $('#select_sup').fadeIn(300);
+      } else {
+        $('#select_sup').fadeOut(300);
+      }
+    });
+  });
+
+
+  const sendToReactAppSetChezClient = (id) => {
+    console.log(id);
+    const message = 'returnToApp_setChezClient_' + id;
+    window.ReactNativeWebView.postMessage(message);
+  };
+</script>
+
+<script>
+  var iconVisiteElements = document.querySelectorAll('.icon-visite');
+
+  var colors = ['#f8d8ba', '#ffcdcf', '#cbccfd', '#86d4d7', '#f9af29'];
+
+  iconVisiteElements.forEach(function(element, index) {
+    var color = colors[index % colors.length];
+    element.style.backgroundColor = color;
+  });
+</script>
+
+<script>
+  window.addEventListener('DOMContentLoaded', function() {
+    var scrollContainer = document.querySelector('.scroll-container');
+    var cardContainer = document.querySelector('.card-container.visites');
+    var scrollDistance = cardContainer.scrollWidth - cardContainer.clientWidth;
+
+    function checkScroll() {
+      var scrollPosition = window.innerHeight + window.pageYOffset;
+      var scrollThreshold = scrollContainer.offsetTop + scrollContainer.offsetHeight;
+
+      if (scrollPosition >= scrollThreshold) {
+        // Start scrolling to the right
+        cardContainer.scrollTo({
+          left: scrollDistance,
+          behavior: 'smooth'
+        });
+
+        // Scroll back to the left after a delay
+        setTimeout(function() {
+          cardContainer.scrollTo({
+            left: 0,
+            behavior: 'smooth'
+          });
+        }, 3000);
+
+        // Remove the scroll event listener
+        window.removeEventListener('scroll', checkScroll);
+      }
+    }
+
+    // Listen for scroll event
+    window.addEventListener('scroll', checkScroll);
+  });
+</script>
+
+
+
+
+<script type="text/javascript">
+  function goclient() {
+    $("#loading-overlay").css('display', 'flex');
+
+    window.location.href = "<?php echo $this->Html->url(array('action' => 'clients', $code)); ?>";
+  }
+</script>

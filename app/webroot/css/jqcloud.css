@@ -1,0 +1,59 @@
+div#wordcloud1, div#wordcloud2, div#wordcloud3{
+  font-family: "Helvetica", "Arial", sans-serif;
+  color: #09f;
+  overflow: hidden;
+  position: relative;
+}
+div#wordcloud1 a, div#wordcloud2 a, div#wordcloud3 a {
+  color: inherit;
+  text-decoration: none;
+}
+div#wordcloud1 a:hover, div#wordcloud2 a:hover, div#wordcloud3 a:hover {
+  color: #0df;
+}
+div#wordcloud1 a:hover, div#wordcloud2 a:hover, div#wordcloud3 a:hover {
+  color: #0cf;
+}
+div#wordcloud1 span, div#wordcloud2 span, div#wordcloud3 span {
+  padding: 0;
+}
+div#wordcloud1 span.w10, div#wordcloud2 span.w10, div#wordcloud3 span.w10 {
+  font-size: 35px;
+  color: #0cf;
+}
+div#wordcloud1 span.w9, div#wordcloud2 span.w9, div#wordcloud3 span.w9 {
+  font-size: 31px;
+  color: #0cf;
+}
+div#wordcloud1 span.w8, div#wordcloud2 span.w8, div#wordcloud3 span.w8 {
+  font-size: 29px;
+  color: #0cf;
+}
+div#wordcloud1 span.w7, div#wordcloud2 span.w7, div#wordcloud3 span.w7 {
+  font-size: 26px;
+  color: #39d;
+}
+div#wordcloud1 span.w6, div#wordcloud2 span.w6, div#wordcloud3 span.w6 {
+  font-size: 23px;
+  color: #90c5f0;
+}
+div#wordcloud1 span.w5, div#wordcloud2 span.w5, div#wordcloud3 span.w5  {
+  font-size: 21px;
+  color: #90a0dd;
+}
+div#wordcloud1 span.w4, div#wordcloud2 span.w4, div#wordcloud3 span.w4  {
+  font-size: 18px;
+  color: #90c5f0;
+}
+div#wordcloud1 span.w3, div#wordcloud2 span.w3, div#wordcloud3 span.w3  {
+  font-size: 16px;
+  color: #a0ddff;
+}
+div#wordcloud1 span.w2, div#wordcloud2 span.w2, div#wordcloud3 span.w2 {
+  font-size: 13px;
+  color: #99ccee;
+}
+div#wordcloud1 span.w1, div#wordcloud2 span.w1, div#wordcloud3 span.w1  {
+  font-size: 11px;
+  color: #aab5f0;
+}
