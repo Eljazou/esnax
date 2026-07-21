@@ -9,9 +9,14 @@
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 
     <?php
-    echo $this->Html->css('/metronic/demo1/dist/assets/plugins/global/plugins.bundle.css');
-    echo $this->Html->css('/metronic/demo1/dist/assets/css/style.bundle');
-    echo $this->Html->script('/metronic/demo1/dist/assets/plugins/global/plugins.bundle.js');
+    // Metronic core theme = Bootstrap 5.3 + Metronic components, served from
+    // app/webroot/css/metronic/. The previous '/metronic/demo1/dist/assets/...'
+    // paths resolved to app/webroot/metronic/, which is an empty directory in
+    // this repo, so no theme CSS was loading at all.
+    // The matching plugins.bundle.css is not shipped here; the third-party
+    // plugin styles it carried (select2, datatables, flatpickr) are loaded
+    // per-view or from the CDN links below.
+    echo $this->Html->css('/css/metronic/css/style.bundle');
     ?>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -1137,13 +1142,22 @@
     </div>
 
     <?php
-    // jQuery and select2 already loaded near the top of <body>, above the
-    // page content, so every view's inline scripts can rely on $ being
-    // defined the moment they run. Only the Metronic UI bundles (menu,
-    // drawer, modal, scroll behaviour) load here at the bottom, exactly
-    // as Metronic's own docs expect.
-    echo $this->Html->script('/metronic/demo1/dist/assets/plugins/global/plugins.bundle');
-    echo $this->Html->script('/metronic/demo1/dist/assets/js/scripts.bundle');
+    // jQuery is loaded near the top of <body>, above the page content, so every
+    // view's inline scripts can rely on $ being defined the moment they run.
+    // (select2 is NOT global - the views that use it load it themselves.)
+    //
+    // Metronic normally ships Bootstrap's JS inside plugins.bundle.js, which is
+    // absent from this repo. scripts.bundle.js below calls the `bootstrap`
+    // global, and the modal/dropdown compat shim further down needs it too, so
+    // Bootstrap 5.3 (Popper included) is loaded from the CDN in its place.
+    // Swap this line for a local copy once plugins.bundle.js is vendored in.
+    ?>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <?php
+    // Metronic UI bundle (KTMenu, KTDrawer, KTToggle, KTScroll) - drives the
+    // sidebar accordion, mobile drawer and sidebar-minimize toggle. Must load
+    // after Bootstrap.
+    echo $this->Html->script('/js/metronic/js/scripts.bundle');
     ?>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.13/flatpickr.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.13/l10n/fr.js"></script>
