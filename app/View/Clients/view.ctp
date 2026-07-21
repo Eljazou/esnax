@@ -74,18 +74,10 @@ $vendeurs = json_decode($vendeurJson, true);
 	.client-view .all-cards { height: auto; overflow: auto; }
 	.client-view .detail_viste { max-height: 829px; overflow-y: scroll; }
 
-	/* AdminLTE-style timeline - kept, Metronic ships no timeline component. */
-	.client-view .timeline { list-style: none; padding: 0; margin: 0; position: relative; }
-	.client-view .timeline:before { content: ""; position: absolute; top: 0; bottom: 0; left: 18px; width: 2px; background: var(--cv-border); }
-	.client-view .timeline > li { position: relative; margin-bottom: 14px; list-style: none; }
-	.client-view .timeline > li.time-label { display: flex; align-items: center; gap: 10px; margin: 18px 0 12px 0; }
-	.client-view .timeline > li.time-label:first-child { margin-top: 0; }
-	.client-view .timeline > li > .fa.cv-timeline-dot { position: absolute; left: 9px; top: 4px; width: 20px; height: 20px; border-radius: 50%; background: var(--cv-primary); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 10px; z-index: 2; }
-	.client-view .timeline-item { margin-left: 46px; background: #fff; border: 1px solid var(--cv-border); border-radius: 10px; padding: 14px 16px; position: relative; }
-	.client-view .timeline-item > .time { float: right; color: var(--cv-muted); font-size: 12.5px; font-weight: 600; }
-	.client-view .timeline-header { font-size: 16px !important; font-weight: 700 !important; margin: 0 0 8px 0; }
-	.client-view .timeline-body { font-size: 13.5px; border-top: 1px solid var(--cv-border); padding-top: 10px; margin-top: 4px; }
-	.client-view .timeline-footer { border-top: 1px solid var(--cv-border); margin-top: 10px; padding-top: 10px; display: flex; align-items: center; gap: 4px; }
+	/* Timeline now uses Metronic's native component (.timeline / .timeline-item /
+	   .timeline-line / .timeline-icon / .timeline-content) straight from
+	   style.bundle.css - the previous AdminLTE-derived overrides were removed so
+	   the theme's own styles apply unmodified. */
 
 	/* Objection pop-out driven by objettog() / pup() - bespoke widget. */
 	.client-view .objet { padding: 0; float: left; width: auto; margin-right: 3px; }
@@ -906,7 +898,7 @@ $vendeurs = json_decode($vendeurJson, true);
 			<div class="tab-pane fade show active" id="tab_1" role="tabpanel">
 				<div class="row">
 					<div class="col-12">
-						<ul class="timeline">
+						<div class="timeline">
 							<?php
 							$ii = 0;
 							$mapinf = array();
@@ -964,26 +956,47 @@ $vendeurs = json_decode($vendeurJson, true);
 									}
 								}
 							?>
-							<li class="time-label">
-								<span class="badge badge-dark"><?php echo strftime("%A %d-%m-%Y", strtotime($visite['date'][0])); ?></span>
-								<span class="badge badge-light-success"><?php echo $visite["timer"]; ?></span>
-							</li>
-							<li>
-								<i class="fa fa-envelope cv-timeline-dot"></i>
-								<div class="timeline-item">
-									<span class="time"><i class="fa fa-clock-o"></i>
-										<?php
-										if ($visite['date'][1] == "00:00:00") {
-											$visite['date'][1] = explode(" ", $visite['created']);
-											$visite['date'][1] = $visite['date'][1][1];
-										}
-										echo $visite['date'][1]; ?></span>
-									<span class="badge badge-light-primary float-end ms-2">
-										<i class="fa <?php echo ($visite['type_visite'] == 'solo') ? 'fa-user' : 'fa-users'; ?>"></i>
-										<?php echo $visite['type_visite']; ?>
-									</span>
-									<h3 class="timeline-header"><?php echo $user; ?></h3>
-                                    <div class="timeline-body">
+							<!--begin::Timeline item-->
+							<div class="timeline-item">
+								<!--begin::Timeline line-->
+								<div class="timeline-line"></div>
+								<!--end::Timeline line-->
+
+								<!--begin::Timeline icon-->
+								<div class="timeline-icon">
+									<i class="fa fa-envelope fs-2 text-gray-500"></i>
+								</div>
+								<!--end::Timeline icon-->
+
+								<!--begin::Timeline content-->
+								<div class="timeline-content mb-10 mt-n1">
+									<!--begin::Timeline heading-->
+									<div class="pe-3 mb-5">
+										<div class="d-flex flex-wrap align-items-center gap-2 mb-2">
+											<span class="badge badge-light-dark"><?php echo strftime("%A %d-%m-%Y", strtotime($visite['date'][0])); ?></span>
+											<span class="badge badge-light-success"><?php echo $visite["timer"]; ?></span>
+											<span class="badge badge-light-primary">
+												<i class="fa <?php echo ($visite['type_visite'] == 'solo') ? 'fa-user' : 'fa-users'; ?> me-1"></i>
+												<?php echo $visite['type_visite']; ?>
+											</span>
+										</div>
+
+										<div class="fs-5 fw-semibold mb-2"><?php echo $user; ?></div>
+
+										<div class="d-flex align-items-center mt-1 fs-6">
+											<div class="text-muted me-2 fs-7">
+												<i class="fa fa-clock-o me-1"></i>
+												<?php
+												if ($visite['date'][1] == "00:00:00") {
+													$visite['date'][1] = explode(" ", $visite['created']);
+													$visite['date'][1] = $visite['date'][1][1];
+												}
+												echo $visite['date'][1]; ?>
+											</div>
+										</div>
+									</div>
+									<!--end::Timeline heading-->
+                                    <div class="mb-5">
                                         <?php
                                         // 1. Laisse le comportement normal V2 / Pharmacie s'afficher (comme ANTIMETIL)
                                         if ($isV2) {
@@ -1000,7 +1013,7 @@ $vendeurs = json_decode($vendeurJson, true);
                                         echo '</div>';
                                         ?>
                                     </div>
-									<div class="timeline-footer">
+									<div class="d-flex align-items-center gap-2 border-top pt-3">
 										<?php if ($this->requestAction('/droits/getrole/visites/edit') == 1): ?>
 											<a class="btn btn-primary btn-sm" href="<?php echo $this->Html->url(array('controller' => 'visites', 'action' => 'edit', $visite['id'])); ?>" title="Editer"><i class="fa fa-edit"></i></a>
 										<?php endif;
@@ -1019,12 +1032,14 @@ $vendeurs = json_decode($vendeurJson, true);
 										?>
 									</div>
 								</div>
-							</li>
+								<!--end::Timeline content-->
+							</div>
+							<!--end::Timeline item-->
 							<?php
 								$ii++;
 							endforeach;
 							?>
-						</ul>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -1035,25 +1050,43 @@ $vendeurs = json_decode($vendeurJson, true);
 							foreach ($appels as $appel):
 								$appeldate = explode(" ", $appel["Rapportprocpect"]["created"])
 							?>
-								<ul class="timeline">
-									<li class="time-label">
-										<span class="badge badge-dark">
-											<?php echo strftime("%A %d-%m-%Y", strtotime($appeldate[0])); ?> </span>
-										</span>
-									</li>
-									<li>
-										<i class="fa fa-envelope cv-timeline-dot"></i>
-										<div class="timeline-item">
-											<span class="badge badge-light-primary rounded-pill float-end"><i
-													class="fa fa-clock-o"></i> <?php echo $appeldate[1]; ?></span>
+								<div class="timeline">
+									<!--begin::Timeline item-->
+									<div class="timeline-item">
+										<!--begin::Timeline line-->
+										<div class="timeline-line"></div>
+										<!--end::Timeline line-->
 
-											<h3 class="timeline-header">
-												<?php echo $appel["User"]["name"] . " (" . $appel["Rapportprocpect"]["type_user"] . ")"; ?>
-											</h3>
-											<span class="badge badge-light-primary ms-3">
-												<?php echo $this->Html->image('clock-white', array('style' => 'width:19px;margin-top: -2px;')) ?>
-												<?php echo $appel["Rapportprocpect"]["duree"]; ?></span>
-											<div class="timeline-body">
+										<!--begin::Timeline icon-->
+										<div class="timeline-icon">
+											<i class="fa fa-phone fs-2 text-gray-500"></i>
+										</div>
+										<!--end::Timeline icon-->
+
+										<!--begin::Timeline content-->
+										<div class="timeline-content mb-10 mt-n1">
+											<!--begin::Timeline heading-->
+											<div class="pe-3 mb-5">
+												<div class="d-flex flex-wrap align-items-center gap-2 mb-2">
+													<span class="badge badge-light-dark"><?php echo strftime("%A %d-%m-%Y", strtotime($appeldate[0])); ?></span>
+													<span class="badge badge-light-primary">
+														<?php echo $this->Html->image('clock-white', array('style' => 'width:19px;margin-top: -2px;')) ?>
+														<?php echo $appel["Rapportprocpect"]["duree"]; ?>
+													</span>
+												</div>
+
+												<div class="fs-5 fw-semibold mb-2">
+													<?php echo $appel["User"]["name"] . " (" . $appel["Rapportprocpect"]["type_user"] . ")"; ?>
+												</div>
+
+												<div class="d-flex align-items-center mt-1 fs-6">
+													<div class="text-muted me-2 fs-7">
+														<i class="fa fa-clock-o me-1"></i><?php echo $appeldate[1]; ?>
+													</div>
+												</div>
+											</div>
+											<!--end::Timeline heading-->
+											<div class="mb-5">
 												<div class="row">
 													<div class="col-md-6">
 														<div class="col-12" style="padding:0px;margin: 6px 0px;">
@@ -1243,7 +1276,7 @@ $vendeurs = json_decode($vendeurJson, true);
 
 												</div>
 											</div>
-											<div class="timeline-footer">
+											<div class="d-flex align-items-center gap-2 border-top pt-3">
 												<?php
 												if ($this->requestAction('/droits/getrole/rapportprocpects/supprimer') == 1):
 												?>
@@ -1256,8 +1289,10 @@ $vendeurs = json_decode($vendeurJson, true);
 											</div>
 
 										</div>
-									</li>
-								</ul>
+										<!--end::Timeline content-->
+									</div>
+									<!--end::Timeline item-->
+								</div>
 							<?php endforeach; ?>
 						</div>
 					</div>
@@ -1269,20 +1304,37 @@ $vendeurs = json_decode($vendeurJson, true);
 							foreach ($stockreel as $stock):
 								$appeldate = explode(" ", $stock["Stockvisite"]["created"]);
 							?>
-								<ul class="timeline">
-									<li class="time-label">
-										<span class="badge badge-dark">
-											<?php echo strftime("%A %d-%m-%Y", strtotime($appeldate[0])); ?> </span>
-										</span>
-									</li>
-									<li>
-										<i class="fa fa-envelope cv-timeline-dot"></i>
-										<div class="timeline-item">
-											<span class="badge badge-light-primary rounded-pill float-end"><i
-													class="fa fa-clock-o"></i><?php echo date("H:i:s", strtotime($appeldate[1])); ?></span>
+								<div class="timeline">
+									<!--begin::Timeline item-->
+									<div class="timeline-item">
+										<!--begin::Timeline line-->
+										<div class="timeline-line"></div>
+										<!--end::Timeline line-->
 
-											<h3 class="timeline-header"><?php echo $stock["User"]["name"] ?></h3>
-											<div class="timeline-body">
+										<!--begin::Timeline icon-->
+										<div class="timeline-icon">
+											<i class="fa fa-cubes fs-2 text-gray-500"></i>
+										</div>
+										<!--end::Timeline icon-->
+
+										<!--begin::Timeline content-->
+										<div class="timeline-content mb-10 mt-n1">
+											<!--begin::Timeline heading-->
+											<div class="pe-3 mb-5">
+												<div class="d-flex flex-wrap align-items-center gap-2 mb-2">
+													<span class="badge badge-light-dark"><?php echo strftime("%A %d-%m-%Y", strtotime($appeldate[0])); ?></span>
+												</div>
+
+												<div class="fs-5 fw-semibold mb-2"><?php echo $stock["User"]["name"] ?></div>
+
+												<div class="d-flex align-items-center mt-1 fs-6">
+													<div class="text-muted me-2 fs-7">
+														<i class="fa fa-clock-o me-1"></i><?php echo date("H:i:s", strtotime($appeldate[1])); ?>
+													</div>
+												</div>
+											</div>
+											<!--end::Timeline heading-->
+											<div class="mb-5">
 												<div class="row">
 													<div class="col-md-12">
 														<div class="col-12" style="padding:0px;margin: 6px 0px;">
@@ -1313,12 +1365,11 @@ $vendeurs = json_decode($vendeurJson, true);
 													</div>
 												</div>
 											</div>
-											<div class="timeline-footer">
-												<b>&nbsp;</b>
-											</div>
 										</div>
-									</li>
-								</ul>
+										<!--end::Timeline content-->
+									</div>
+									<!--end::Timeline item-->
+								</div>
 							<?php endforeach; ?>
 						</div>
 					</div>
